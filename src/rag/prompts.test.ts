@@ -32,6 +32,12 @@ describe('buildRagPrompt', () => {
     expect(user).toContain('Never answer with only a citation');
     expect(user).toContain('copy');
   });
+
+  it('forbids placeholder/template answers in place of real values', () => {
+    const { user } = buildRagPrompt('q', HITS, PERSONA);
+    expect(user).toContain('never a bracket');
+    expect(user).toContain('write the exact value from the context as the answer');
+  });
 });
 
 describe('buildGeneralPrompt', () => {
