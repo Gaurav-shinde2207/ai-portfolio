@@ -38,17 +38,13 @@ const isActive = (href: string) =>
       {links.map((l) => (
         <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
       ))}
-      {/*
-        "Ask-Gaurav" route ships in Task 8; until then this item is
-        pointer-disabled so it cannot 404 users.
-      */}
-      <span class="nav-disabled" aria-disabled="true" title="Ships with Task 8">Ask-Gaurav</span>
+      <a href="/ask-gaurav/" aria-current={isActive('/ask-gaurav/') ? 'page' : undefined}>Ask-Gaurav</a>
     </nav>
     <nav class="site-nav flex flex-wrap gap-4 px-6 py-2 lg:hidden" aria-label="Main">
       {links.map((l) => (
         <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
       ))}
-      <span class="nav-disabled" aria-disabled="true">Ask-Gaurav</span>
+      <a href="/ask-gaurav/" aria-current={isActive('/ask-gaurav/') ? 'page' : undefined}>Ask-Gaurav</a>
     </nav>
 
     <main class="layout-main px-6">

@@ -13,14 +13,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
     <h1 class="text-3xl" style="font-family: var(--font-mono);">Gaurav Shashikant Shinde</h1>
     <p style="color: var(--muted);">AI Engineer · Karad, Maharashtra, India</p>
-    <p class="mt-2">{resume.summary}</p>
+    <p class="mt-2" id="summary">{resume.summary}</p>
 
-    <h2 class="text-xl mt-8" style="font-family: var(--font-mono);">Skills</h2>
+    <h2 class="text-xl mt-8" id="skills" style="font-family: var(--font-mono);">Skills</h2>
     <div class="mt-2 flex flex-wrap gap-2">
       {resume.skills.map((s) => <span class="badge">{s}</span>)}
     </div>
 
-    <h2 class="text-xl mt-8" style="font-family: var(--font-mono);">Experience</h2>
+    <h2 class="text-xl mt-8" id="experience" style="font-family: var(--font-mono);">Experience</h2>
     {resume.experience.map((e) => (
       <div class="mt-4">
         <p>
@@ -31,7 +31,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     ))}
 
-    <h2 class="text-xl mt-8" style="font-family: var(--font-mono);">Contact</h2>
+    <h2 class="text-xl mt-8" id="contact" style="font-family: var(--font-mono);">Contact</h2>
     <p class="mt-1"><a href={`mailto:${resume.email}`}>{resume.email}</a> · <a href={`https://github.com/${resume.github}`} rel="noopener">github.com/{resume.github}</a> · <a href={resume.linkedin} rel="noopener">LinkedIn</a></p>
   </section>
 </BaseLayout>
