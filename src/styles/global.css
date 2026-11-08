@@ -23,7 +23,13 @@ pre {
   font-family: var(--font-mono);
 }
 
-/* Component classes (Task 4) */
+/* Page shell tokens (moved off <body> inline style so print styles can win) */
+.site-body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/* .badge pill */
 .badge {
   display: inline-block;
   padding: 0.15rem 0.6rem;

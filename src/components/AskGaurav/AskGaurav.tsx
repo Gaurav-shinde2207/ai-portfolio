@@ -31,6 +31,29 @@ export default function AskGaurav() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [busy, setBusy] = useState(false);
   const workerRef = useRef<Worker | null>(null);
+  const askTimeoutRef = useRef<number | null>(null);
+
+  const clearAskTimeout = () => {
+    if (askTimeoutRef.current !== null) {
+      clearTimeout(askTimeoutRef.current);
+      askTimeoutRef.current = null;
+    }
+  };
+
+  // A wedged generation must never lock the chat: on per-ask timeout, kill the
+  // worker (clears its ack guard), unblock the form, and surface a reset path.
+  const askTimedOut = () => {
+    const w = workerRef.current;
+    w?.postMessage({ type: 'cancel' } as MainToWorker);
+    w?.terminate();
+    workerRef.current = null;
+    askTimeoutRef.current = null;
+    setBusy(false);
+    setMessages((prev) => [
+      ...prev,
+      { role: 'assistant', text: '', error: 'the engine got stuck — reset it to continue' },
+    ]);
+  };
 
   const spawnWorker = () => {
     workerRef.current?.terminate();
@@ -76,6 +99,7 @@ export default function AskGaurav() {
         });
         break;
       case 'done':
+        clearAskTimeout();
         setMessages((prev) => {
           if (prev.length === 0) return [{ role: 'assistant', text: '', cited: msg.cited, stats: msg.stats }];
           const copy = prev.slice();
@@ -94,13 +118,20 @@ export default function AskGaurav() {
         setBusy(false);
         break;
       case 'error':
+        clearAskTimeout();
         setMessages((prev) => [...prev, { role: 'assistant', text: '', error: msg.detail }]);
         setBusy(false);
         break;
     }
   }
 
-  useEffect(() => () => workerRef.current?.terminate(), []);
+  useEffect(
+    () => () => {
+      workerRef.current?.terminate();
+      clearAskTimeout();
+    },
+    []
+  );
 
   const consent = () => {
     const raw = new URLSearchParams(window.location.search).get('engine');
@@ -124,6 +155,10 @@ export default function AskGaurav() {
       engineHint !== 'none' &&
       workerRef.current
     ) {
+      const raw = Number(new URLSearchParams(window.location.search).get('timeoutMs') ?? '');
+      const limit = Number.isFinite(raw) && raw > 0 ? raw : 120_000;
+      clearAskTimeout();
+      askTimeoutRef.current = window.setTimeout(askTimedOut, limit);
       workerRef.current.postMessage({ type: 'ask', q } as MainToWorker);
     } else {
       // engine unavailable: honest canned fallback without a model

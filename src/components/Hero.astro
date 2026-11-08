@@ -167,11 +167,8 @@ const introLines = [
       el.className = 'terminal out';
       if (staticSub) staticSub.hidden = false;
     } else {
-      let li = 0, ci = 0, killed = false;
-      const onVision = () => { killed = true; };
-      document.addEventListener('visibilitychange', onVision);
+      let li = 0, ci = 0;
       const tick = () => {
-        if (killed) return;
         const caret = '<span class="caret"></span>';
         let html = '';
         for (let i = 0; i < lines.length; i++) {
