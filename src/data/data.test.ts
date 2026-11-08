@@ -68,4 +68,29 @@ describe('resume.json', () => {
     expect(Array.isArray(resume.skills)).toBe(true);
     expect(Array.isArray(resume.experience)).toBe(true);
   });
+
+  const experience = resume.experience as Array<{
+    role: string;
+    org: string;
+    period: string;
+    detail: string;
+  }>;
+  const skills = resume.skills as string[];
+
+  test('leads with the TCS AI Engineer experience', () => {
+    expect(experience[0].org).toBe('Tata Consultancy Services (TCS)');
+    expect(experience[0].period).toContain('2024');
+    expect(experience[0].detail).toContain('75%');
+  });
+
+  test('skills cover the LLM/RAG/agents stack from the resume', () => {
+    for (const s of ['LangChain', 'LangGraph', 'LoRA/QLoRA', 'RAGAS', 'FastAPI']) {
+      expect(skills.some((k) => k.includes(s)), `skill list must mention ${s}`).toBe(true);
+    }
+  });
+
+  test('has education and certification from the resume', () => {
+    expect((resume.education as { school: string }).school).toContain('Annasaheb Dange');
+    expect(resume.certification as string).toContain('Generative AI with Large Language Models');
+  });
 });

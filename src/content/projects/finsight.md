@@ -1,22 +1,30 @@
 ---
 title: 'FinSight — Financial RAG System'
-blurb: 'Production-grade RAG over financial PDFs with citation-aware retrieval, hallucination detection, and evaluation metrics for grounded answers.'
+blurb: 'End-to-end RAG over financial PDFs: section-aware chunking into persistent ChromaDB, citation-grounded answers, an insufficient-context fallback that refuses to call the LLM, and a RAGAS/NDCG@k evaluation with hallucination detection.'
 metrics:
   - label: 'Retrieval'
-    value: 'Citation-aware over financial PDFs'
-  - label: 'Guardrails'
-    value: 'Hallucination detection + eval metrics'
+    value: 'BGE + persistent ChromaDB, page-level citations'
+  - label: 'Evaluation'
+    value: 'RAGAS + NDCG@k + hallucination detection'
 stack:
   - Python
-  - LangChain
-  - Vector store
-  - LLM APIs
+  - FastAPI
+  - Streamlit
+  - ChromaDB
+  - BGE
+  - PyMuPDF
+  - Groq (Llama 3.1 8B)
+  - RAGAS
+  - Docker Compose
 repoUrl: 'https://github.com/Gaurav-shinde2207/finsight-financial-rag-system'
 ---
 
-Grounded question-answering over financial documents. Every answer is pinned to
-citation-aware retrievals from the underlying PDFs, and a hallucination-detection layer
-checks the generated text against the retrieved evidence before it reaches the user.
+Grounded question-answering over financial documents: PDF upload, page-level extraction
+with PyMuPDF, section-aware overlapping chunks, BGE embeddings into persistent ChromaDB,
+and answer generation behind REST APIs (FastAPI + Streamlit UI, Docker Compose).
 
-The repo includes an evaluation harness with explicit metrics, so retrieval quality and
-answer grounding are measured, not asserted.
+Every answer ships with file/page/section citations and similarity scores — and when no
+relevant chunk is retrieved, the system returns an insufficient-context response instead
+of calling the LLM. Evaluation is built in: RAGAS metrics, NDCG@k, deterministic
+sentence-level hallucination detection, and a benchmark runner that flags faithfulness
+regressions, exposed through a FastAPI /evaluate endpoint.

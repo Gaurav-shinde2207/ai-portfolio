@@ -1,25 +1,30 @@
 ---
 title: 'SQLmind'
-blurb: 'Self-correcting natural-language-to-SQL agent over SQLite Chinook — a LangGraph pipeline with bounded retries, correction-memory few-shot retrieval, and a leakage-guarded evaluation that includes the honest negative result.'
+blurb: 'Self-correcting natural-language-to-SQL agent over SQLite Chinook — a LangGraph pipeline with intent parsing, bounded self-correction retries, hard security gates, and a leakage-controlled evaluation that reports the honest negative result.'
 metrics:
-  - label: 'Pipeline'
-    value: 'LangGraph with bounded retries'
-  - label: 'Honesty'
-    value: 'Leakage-guarded eval, all runs reported'
+  - label: 'Execution accuracy'
+    value: '60.7% baseline on 28 held-out questions'
+  - label: 'Safety'
+    value: 'STRIDE threat model, SQL allowlisting'
 stack:
   - Python
   - LangGraph
+  - Groq
   - SQLite
   - FastAPI
-  - CLI
+  - Sentence Transformers
 repoUrl: 'https://github.com/Gaurav-shinde2207/SQLmind'
 ---
 
-Natural language goes in, correct SQL comes out — and when it does not, the agent
-fixes itself. A LangGraph pipeline turns a question into SQL, runs it against the
-Chinook dataset, and on failure retries with bounded attempts while retrieving few-shot
-corrections from a replay memory of past mistakes.
+A LangGraph agent turns natural language into SQL: intent parsing, example retrieval,
+SQL generation, execution, validation, and up to 3 bounded self-correction retries,
+exposed through both a CLI and a FastAPI endpoint.
 
-The evaluation is leakage-guarded: baseline, retry, and correction-memory variants are
-measured separately, and the honest negative result is reported in the repo. Two
-interfaces ship in the same codebase: an interactive CLI and a FastAPI endpoint.
+Security is first-class: read-only SQL execution behind a SELECT/WITH-only statement
+gate, a read-only database connection, a LIMIT guard, and a query timeout — with a
+STRIDE threat model covering cache poisoning.
+
+The evaluation is leakage-controlled on 28 held-out Chinook questions: baseline 60.7%,
+retry-only 57.1%, retry plus correction memory 57.1% execution accuracy. Correction
+memory gave no measurable gain (overlapping 95% CIs) and nested queries were weakest at
+28.6% — both honest results reported, not hidden. 150 offline tests back the pipeline.

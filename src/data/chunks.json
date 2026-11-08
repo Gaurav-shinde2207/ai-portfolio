@@ -14,49 +14,55 @@
   {
     "id": "intro-1",
     "anchor": "intro",
-    "text": "Grounded question-answering over financial documents. Every answer is pinned to citation-aware retrievals from the underlying PDFs, and a hallucination-detection layer checks the generated text against the retrieved evidence before it reaches the user. The repo includes an evaluation harness with explicit metrics, so retrieval quality and answer grounding are measured, not asserted.",
+    "text": "Grounded question-answering over financial documents: PDF upload, page-level extraction with PyMuPDF, section-aware overlapping chunks, BGE embeddings into persistent ChromaDB, and answer generation behind REST APIs (FastAPI + Streamlit UI, Docker Compose). Every answer ships with file/page/section citations and similarity scores — and when no relevant chunk is retrieved, the system returns an insufficient-context response instead of calling the LLM. Evaluation is built in: RAGAS metrics, NDCG@k, deterministic sentence-level hallucination detection, and a benchmark runner that flags faithfulness regressions, exposed through a FastAPI /evaluate endpoint.",
     "path": "/projects/finsight/"
   },
   {
     "id": "intro-1",
     "anchor": "intro",
-    "text": "A fine-tuning project turning an open 3B-parameter model into a SQL explainer: given an analytical query, it describes the business logic in plain language. The model is served by a FastAPI app that streaming-serves through llama.cpp. Weights auto-download from Hugging Face Hub on first run, and a reproducible evaluation harness measures output quality on a held-out set — the same fine-tune can be re-trained and re-scored end to end from the repo.",
+    "text": "Fine-tuned Llama 3.2 3B Instruct with QLoRA on 150 SQL-to-explanation examples covering CTEs, window functions, and JOINs — trained in under 1 GPU-hour on a Kaggle T4 and exported to a ~2 GB Q4_K_M GGUF model, published at huggingface.co/ShindeGaurav-207/SQL2NL and served through FastAPI with llama.cpp/Ollama. Quality is measured, not asserted: a keyword-coverage, MiniLM semantic-similarity, and latency harness scores held-out queries — 6/8 passed with 0.74 average semantic similarity and 65.1% keyword coverage. pytest tests and GitHub Actions CI keep the pipeline reproducible end to end.",
     "path": "/projects/sql2nl/"
   },
   {
     "id": "intro-1",
     "anchor": "intro",
-    "text": "Natural language goes in, correct SQL comes out — and when it does not, the agent fixes itself. A LangGraph pipeline turns a question into SQL, runs it against the Chinook dataset, and on failure retries with bounded attempts while retrieving few-shot corrections from a replay memory of past mistakes. The evaluation is leakage-guarded: baseline, retry, and correction-memory variants are measured separately, and the honest negative result is reported in the repo. Two interfaces ship in the same codebase: an interactive CLI and a FastAPI endpoint.",
+    "text": "A LangGraph agent turns natural language into SQL: intent parsing, example retrieval, SQL generation, execution, validation, and up to 3 bounded self-correction retries, exposed through both a CLI and a FastAPI endpoint. Security is first-class: read-only SQL execution behind a SELECT/WITH-only statement gate, a read-only database connection, a LIMIT guard, and a query timeout — with a STRIDE threat model covering cache poisoning. The evaluation is leakage-controlled on 28 held-out Chinook questions: baseline 60.7%, retry-only 57.1%, retry plus correction memory 57.1% execution accuracy. Correction memory gave no measurable gain (overlapping 95% CIs) and nested queries were weakest at 28.6% — both honest results reported, not hidden. 150 offline tests back the pipeline.",
     "path": "/projects/sqlmind/"
   },
   {
     "id": "summary-1",
     "anchor": "summary",
-    "text": "AI engineer building in-browser AI systems: local LLM inference, embeddings-driven retrieval, and evaluation-first workflows. Ships sites that run a real language model in the visitor's browser — no server, no API keys, no data leaving the device.",
+    "text": "AI Engineer at TCS building Generative AI, RAG, LLM fine-tuning, and AI-agent systems with open-source LLMs (Llama), LangChain/LangGraph, vector databases, and FastAPI. Deployed a RAG chatbot for a public-sector bank client; fine-tunes small language models with LoRA/QLoRA and builds evaluation-driven pipelines covering retrieval quality, hallucination detection, and leakage-controlled benchmarks. Also ships in-browser AI: this portfolio runs a real language model in the visitor's browser — no server, no API keys.",
     "path": "/resume/"
   },
   {
     "id": "skills-1",
     "anchor": "skills",
-    "text": "AI engineering. RAG (retrieval-augmented generation). LLM inference (WebLLM, wllama). Embeddings (sentence-transformers, all-MiniLM-L6-v2). Agent tooling (OpenCode, plugins, MCP). Python. TypeScript. Astro. React. Manim / technical animation. Git. Firebase Hosting.",
+    "text": "LLMs & fine-tuning (Llama 3.1/3.2, SLMs, LoRA/QLoRA, Unsloth, TRL, GGUF, llama.cpp, Ollama). RAG & retrieval (ChromaDB, Sentence Transformers, BGE, semantic search, citation-grounded generation). AI agents (LangChain, LangGraph, tool calling, self-correction loops, text-to-SQL). LLM evaluation & safety (RAGAS, NDCG, execution accuracy, hallucination detection, leakage control, STRIDE threat modeling). Python, PyTorch, FastAPI, REST APIs, Docker, Docker Compose, GitHub Actions, pytest. SQL, SQLite, Pandas, NumPy. In-browser LLM inference (WebLLM, wllama, MiniLM embeddings). TypeScript, Astro, React, Git, CI/CD.",
     "path": "/resume/"
   },
   {
     "id": "experience-1",
     "anchor": "experience",
-    "text": "AI Engineer — OpenCode plugin & agent ecosystem (Independent, 2026). Audited ~25 OpenCode plugins against the V1→V2 plugin API, verified which architectures load, and installed/ported local builds. Maintains a personal Obsidian second brain that agents read at session start. Builder — in-browser AI systems (Independent, 2026). Built an in-browser RAG assistant: build-time MiniLM embeddings, cosine top-k retrieval, a retrieval-score router between grounded and general-AI modes, and WebLLM streaming with a WASM fallback ladder — all client-side, eval-tested. Builder — SQLmind & SQL2NL pipelines (Independent, 2025).",
+    "text": "AI Engineer (Tata Consultancy Services (TCS), 2024 – Present). Built and deployed a client-facing RAG chatbot enabling branch staff of a public-sector bank to resolve recurring transaction issues — interest-rate errors and data-correction requests — in real time. Architected the pipeline on LangChain, Llama 3.1 8B (Ollama), BAAI/bge-small-en-v1.5 embeddings, and Oracle Database as the vector store. Designed the AI-assisted resolution workflow that lets branches resolve 75% of identified service-desk requests without backend-analyst escalation. Builder — in-browser AI systems (Independent, 2026).",
     "path": "/resume/"
   },
   {
     "id": "experience-2",
     "anchor": "experience",
-    "text": "Shipped a self-correcting natural-language-to-SQL agent (LangGraph, bounded retries, correction-memory retrieval, leakage-guarded evaluation) and fine-tuned Llama 3.2 3B into a SQL-to-English model served via FastAPI + llama.cpp. Also built a citation-aware financial RAG with hallucination detection and a FastAPI-deployed churn-prediction pipeline, plus an AI cafe platform with Gemini chat ordering live on Cloud Run.",
+    "text": "Built an in-browser RAG assistant: build-time MiniLM embeddings, cosine top-k retrieval, a retrieval-score router between grounded and general-AI modes, and WebLLM streaming with a WASM fallback ladder — all client-side, eval-tested. This portfolio is itself the demo.",
+    "path": "/resume/"
+  },
+  {
+    "id": "education-1",
+    "anchor": "education",
+    "text": "B.Tech, Mechanical Engineering — Annasaheb Dange College of Engineering and Technology, Ashta, 2019 – 2023. Certification: Generative AI with Large Language Models.",
     "path": "/resume/"
   },
   {
     "id": "contact-1",
     "anchor": "contact",
-    "text": "Email: shindegaurav2201@gmail.com. GitHub: https://github.com/Gaurav-shinde2207. LinkedIn: https://www.linkedin.com/in/gaurav-shinde-2182b51a1.",
+    "text": "Email: shindegaurav2201@gmail.com. GitHub: https://github.com/Gaurav-shinde2207. LinkedIn: https://www.linkedin.com/in/gaurav-shinde-2182b51a1. Location: Navi Mumbai, India.",
     "path": "/resume/"
   }
 ]
