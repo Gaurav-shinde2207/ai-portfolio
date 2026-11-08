@@ -1,0 +1,45 @@
+---
+import resume from '../data/resume.json';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Résumé — Gaurav Shashikant Shinde" description={resume.summary}>
+  <section class="max-w-3xl mx-auto px-6 py-16 resume">
+    <div class="print-bar no-print">
+      <a class="link" href="javascript:window.print()">Print / save as PDF</a>
+      <a class="link" href={`mailto:${resume.email}`}>Email me</a>
+      <a class="link" href={`https://github.com/${resume.github}`} rel="noopener">GitHub</a>
+      <a class="link" href={resume.linkedin} rel="noopener">LinkedIn</a>
+    </div>
+    <h1 class="text-3xl" style="font-family: var(--font-mono);">Gaurav Shashikant Shinde</h1>
+    <p style="color: var(--muted);">AI Engineer · Karad, Maharashtra, India</p>
+    <p class="mt-2">{resume.summary}</p>
+
+    <h2 class="text-xl mt-8" style="font-family: var(--font-mono);">Skills</h2>
+    <div class="mt-2 flex flex-wrap gap-2">
+      {resume.skills.map((s) => <span class="badge">{s}</span>)}
+    </div>
+
+    <h2 class="text-xl mt-8" style="font-family: var(--font-mono);">Experience</h2>
+    {resume.experience.map((e) => (
+      <div class="mt-4">
+        <p>
+          <strong>{e.role}</strong>
+          <span style="color: var(--muted);"> · {e.org} · {e.period}</span>
+        </p>
+        <p class="mt-1">{e.detail}</p>
+      </div>
+    ))}
+
+    <h2 class="text-xl mt-8" style="font-family: var(--font-mono);">Contact</h2>
+    <p class="mt-1"><a href={`mailto:${resume.email}`}>{resume.email}</a> · <a href={`https://github.com/${resume.github}`} rel="noopener">github.com/{resume.github}</a> · <a href={resume.linkedin} rel="noopener">LinkedIn</a></p>
+  </section>
+</BaseLayout>
+
+<style>
+  @media print {
+    .no-print { display: none; }
+    body { background: #fff; color: #111; }
+    a { color: #111; text-decoration: none; }
+  }
+</style>
