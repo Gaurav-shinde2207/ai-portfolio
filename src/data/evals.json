@@ -32,12 +32,12 @@
     "expectedKeywords": ["plugin", "V1"]
   },
   {
-    "q": "Did Gaurav build anything about Heesch numbers?",
-    "expectedKeywords": ["Heesch"]
+    "q": "Has Gaurav built a natural-language-to-SQL system?",
+    "expectedKeywords": ["SQLmind"]
   },
   {
-    "q": "What does Gaurav use to render math explainers?",
-    "expectedKeywords": ["Manim"]
+    "q": "Does Gaurav have a live deployed demo?",
+    "expectedKeywords": ["Cloud Run"]
   },
   {
     "q": "Which languages and frameworks does Gaurav code in?",

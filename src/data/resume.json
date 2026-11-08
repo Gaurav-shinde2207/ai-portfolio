@@ -31,10 +31,10 @@
       "detail": "Built an in-browser RAG assistant: build-time MiniLM embeddings, cosine top-k retrieval, a retrieval-score router between grounded and general-AI modes, and WebLLM streaming with a WASM fallback ladder — all client-side, eval-tested."
     },
     {
-      "role": "Creator — math explainer video pipeline",
+      "role": "Builder — SQLmind & SQL2NL pipelines",
       "org": "Independent",
-      "period": "2026",
-      "detail": "Scripted, rendered, and verified Manim + voiceover explainers of current arXiv research (Heesch numbers in 3D), including LaTeX, TTS caching, and frame-level draft verification."
+      "period": "2025",
+      "detail": "Shipped a self-correcting natural-language-to-SQL agent (LangGraph, bounded retries, correction-memory retrieval, leakage-guarded evaluation) and fine-tuned Llama 3.2 3B into a SQL-to-English model served via FastAPI + llama.cpp. Also built a citation-aware financial RAG with hallucination detection and a FastAPI-deployed churn-prediction pipeline, plus an AI cafe platform with Gemini chat ordering live on Cloud Run."
     }
   ]
 }

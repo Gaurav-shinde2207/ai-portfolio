@@ -8,6 +8,20 @@ import { projectsSchema } from './content-schema';
 const here = dirname(fileURLToPath(import.meta.url));
 
 describe('projects content collection', () => {
+  const REPOS = [
+    'ai-portfolio',
+    'Gaurav-shinde2207',
+    'CafeMind',
+    'SQLmind',
+    'SQL2NL',
+    'customer-churn-ml-api',
+    'finsight-financial-rag-system',
+    'my_Leetcode_journey',
+    'Credit-Card-Fraud-Detection-using-ML',
+    'Parkison-Disease-Prediction-using-ML',
+    'House-Price-Prediction',
+  ];
+
   test('loads at least 1 project and every project passes the schema', () => {
     const dir = join(here, '../content/projects');
     const files = readdirSync(dir).filter((f) => f.endsWith('.md'));
@@ -16,6 +30,24 @@ describe('projects content collection', () => {
       const raw = readFileSync(join(dir, f), 'utf8');
       const fm = yamlLoad(raw.split(/^---$/m)[1]) as Record<string, unknown>;
       expect(() => projectsSchema.parse(fm)).not.toThrow();
+    }
+  });
+
+  test('every project is a real GitHub repo under Gaurav-shinde2207', () => {
+    const dir = join(here, '../content/projects');
+    for (const f of readdirSync(dir).filter((f) => f.endsWith('.md'))) {
+      const raw = readFileSync(join(dir, f), 'utf8');
+      const fm = yamlLoad(raw.split(/^---$/m)[1]) as { repoUrl?: string; demoUrl?: string };
+      const links = [fm.repoUrl, fm.demoUrl].filter(
+        (l): l is string => typeof l === 'string' && l.length > 0
+      );
+      expect(links.length, `${f} must link its GitHub repo or demo`).toBeGreaterThan(0);
+      expect(
+        fm.repoUrl,
+        `${f} repoUrl must be github.com/Gaurav-shinde2207/<repo>`
+      ).toMatch(/^https:\/\/github\.com\/Gaurav-shinde2207\/[^/]+$/);
+      const repo = (fm.repoUrl as string).replace('https://github.com/Gaurav-shinde2207/', '');
+      expect(REPOS, `${f} references unknown repo ${repo}`).toContain(repo);
     }
   });
 });

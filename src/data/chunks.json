@@ -2,8 +2,32 @@
   {
     "id": "intro-1",
     "anchor": "intro",
-    "text": "A hybrid ThreeDScene + VoiceoverScene pipeline that turns dense math (Bašić, \"The Heesch number in E³ is unbounded\", arXiv:2610.24281) into a narrated, frame-checked animation. The second scene re-imagined the same math as a flat vector \"rings\" visual with a dimension ladder and a big red No. card. Rendering is fully scripted: portable TinyTeX for pdflatex, cached narration mp3s for offline re-renders, and deterministic 480p15 drafts verified frame by frame before any 1080p60 final.",
-    "path": "/projects/heesch-explainer-videos/"
+    "text": "An end-to-end cafe platform where ordering happens through an AI chat agent built on Google Gemini. The conversation layer is served by a FastAPI backend that talks to Cloud SQL for state, and the whole thing runs as a Cloud Run service — a real, publicly reachable deployment rather than a localhost demo. The live URL above is the actual production service: send a message, and the agent interprets the order, grounds it in menu data, and handles the back-and-forth.",
+    "path": "/projects/cafemind/"
+  },
+  {
+    "id": "intro-1",
+    "anchor": "intro",
+    "text": "A complete ML engineering exercise: from raw customer data to a deployed scoring API. Model optimization covers threshold tuning (rather than defaulting to 0.5) and balanced training with SMOTE, and the trained artifact sits behind a FastAPI endpoint that consumes feature vectors and returns predictions.",
+    "path": "/projects/customer-churn-ml-api/"
+  },
+  {
+    "id": "intro-1",
+    "anchor": "intro",
+    "text": "Grounded question-answering over financial documents. Every answer is pinned to citation-aware retrievals from the underlying PDFs, and a hallucination-detection layer checks the generated text against the retrieved evidence before it reaches the user. The repo includes an evaluation harness with explicit metrics, so retrieval quality and answer grounding are measured, not asserted.",
+    "path": "/projects/finsight/"
+  },
+  {
+    "id": "intro-1",
+    "anchor": "intro",
+    "text": "A fine-tuning project turning an open 3B-parameter model into a SQL explainer: given an analytical query, it describes the business logic in plain language. The model is served by a FastAPI app that streaming-serves through llama.cpp. Weights auto-download from Hugging Face Hub on first run, and a reproducible evaluation harness measures output quality on a held-out set — the same fine-tune can be re-trained and re-scored end to end from the repo.",
+    "path": "/projects/sql2nl/"
+  },
+  {
+    "id": "intro-1",
+    "anchor": "intro",
+    "text": "Natural language goes in, correct SQL comes out — and when it does not, the agent fixes itself. A LangGraph pipeline turns a question into SQL, runs it against the Chinook dataset, and on failure retries with bounded attempts while retrieving few-shot corrections from a replay memory of past mistakes. The evaluation is leakage-guarded: baseline, retry, and correction-memory variants are measured separately, and the honest negative result is reported in the repo. Two interfaces ship in the same codebase: an interactive CLI and a FastAPI endpoint.",
+    "path": "/projects/sqlmind/"
   },
   {
     "id": "summary-1",
@@ -20,13 +44,13 @@
   {
     "id": "experience-1",
     "anchor": "experience",
-    "text": "AI Engineer — OpenCode plugin & agent ecosystem (Independent, 2026). Audited ~25 OpenCode plugins against the V1→V2 plugin API, verified which architectures load, and installed/ported local builds. Maintains a personal Obsidian second brain that agents read at session start. Builder — in-browser AI systems (Independent, 2026). Built an in-browser RAG assistant: build-time MiniLM embeddings, cosine top-k retrieval, a retrieval-score router between grounded and general-AI modes, and WebLLM streaming with a WASM fallback ladder — all client-side, eval-tested. Creator — math explainer video pipeline (Independent, 2026).",
+    "text": "AI Engineer — OpenCode plugin & agent ecosystem (Independent, 2026). Audited ~25 OpenCode plugins against the V1→V2 plugin API, verified which architectures load, and installed/ported local builds. Maintains a personal Obsidian second brain that agents read at session start. Builder — in-browser AI systems (Independent, 2026). Built an in-browser RAG assistant: build-time MiniLM embeddings, cosine top-k retrieval, a retrieval-score router between grounded and general-AI modes, and WebLLM streaming with a WASM fallback ladder — all client-side, eval-tested. Builder — SQLmind & SQL2NL pipelines (Independent, 2025).",
     "path": "/resume/"
   },
   {
     "id": "experience-2",
     "anchor": "experience",
-    "text": "Scripted, rendered, and verified Manim + voiceover explainers of current arXiv research (Heesch numbers in 3D), including LaTeX, TTS caching, and frame-level draft verification.",
+    "text": "Shipped a self-correcting natural-language-to-SQL agent (LangGraph, bounded retries, correction-memory retrieval, leakage-guarded evaluation) and fine-tuned Llama 3.2 3B into a SQL-to-English model served via FastAPI + llama.cpp. Also built a citation-aware financial RAG with hallucination detection and a FastAPI-deployed churn-prediction pipeline, plus an AI cafe platform with Gemini chat ordering live on Cloud Run.",
     "path": "/resume/"
   },
   {
