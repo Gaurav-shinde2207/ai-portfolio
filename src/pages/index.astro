@@ -1,18 +1,229 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Hero from '../components/Hero.astro';
-import ScrollReveal from '../components/ScrollReveal.astro';
+import resume from '../data/resume.json';
+import {
+  HERO_NAME,
+  HERO_PROMISE,
+  IDENTITY,
+  STATS,
+  PROJECTS,
+  SECONDARY,
+  SKILLS_BUCKETS,
+  EMAIL_PROMISE,
+} from '../data/onep';
+import '../scripts/anim';
+
+type Stat = (typeof STATS)[number];
+
+const copyEmail = resume.email;
+const gh = `https://github.com/${resume.github}`;
 ---
 
-<BaseLayout title="Gaurav Shashikant Shinde — AI Engineer">
-  <Hero />
-  <section class="max-w-3xl mx-auto px-6 py-20">
-    <ScrollReveal>
-      <h2 class="text-2xl" style="font-family: var(--font-mono);">Building in-browser AI systems.</h2>
-      <p class="mt-3" style="color: var(--muted);">
-        This site ships with a local language model — retrieval, embeddings and
-        inference all run in your browser, no server involved. Ask it below.
-      </p>
-    </ScrollReveal>
+<BaseLayout title="Gaurav Shinde — AI Engineer">
+  <!-- ================= HERO ================= -->
+  <section class="hero section" aria-label="Introduction">
+    <p class="hero-kicker hero-fade">AI Engineer · Navi Mumbai · Open to hire</p>
+    <h1 class="hero-title">{HERO_NAME}</h1>
+    <p class="hero-sub hero-fade">{HERO_PROMISE}</p>
+    <a class="hero-cta magnetic hero-fade" href="/#projects" data-magnetic>See the work</a>
+
+    <ul class="stat-band hero-fade">
+      {STATS.map((s: Stat) => (
+        <li class="stat" key={s.label}>
+          {'display' in s ? (
+            <span class="num">{(s as { display?: string }).display}</span>
+          ) : (
+            <span
+              class="num"
+              data-to={s.value}
+              data-decimals={!Number.isInteger(s.value) ? 1 : 0}
+              data-prefix={s.prefix ?? ''}
+              data-suffix={s.suffix ?? ''}
+            >{s.prefix ?? ''}{Number.isInteger(s.value) ? String(s.value) : s.value.toFixed(1)}{s.suffix ?? ''}</span>
+          )}
+          <span class="lbl">{s.label}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- ================= ABOUT / SUMMARY ================= -->
+  <section id="summary" class="section">
+    <h2 class="section-label" data-reveal>About</h2>
+    <p class="identity" data-reveal>{IDENTITY}</p>
+    <p class="biography" data-reveal>{resume.summary}</p>
+  </section>
+
+  <!-- ================= PROJECTS ================= -->
+  <section id="projects" class="section">
+    <h2 class="section-label" data-reveal>Projects</h2>
+
+    {PROJECTS.map((p) => (
+      <article id={`${p.key}-intro`} class="stage" data-reveal>
+        <div class="stage-body">
+          <p class="dates">{p.dates} · {p.status}</p>
+          <h3>{p.title}</h3>
+          <p class="tagline">{p.tagline}</p>
+
+          <ul class="kpi-row">
+            {p.kpis.map((k) => (
+              <li class="kpi">
+                <span class="v">{k.value}</span>
+                <span class="l">{k.label}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div class="spine">
+            <h4>The problem.</h4>
+            <p>{p.problem}</p>
+            <h4>What I built.</h4>
+            <p>{p.build}</p>
+
+            <h4>Outcome.</h4>
+            <ul class="outcome-list">
+              {p.outcomes.map((o) => <li>{o}</li>)}
+            </ul>
+          </div>
+
+          <ul class="chips">
+            {p.stack.map((t) => <li class="chip">{t}</li>)}
+          </ul>
+
+          <p class="stage-links">
+            <a class="link" href={p.repoUrl} target="_blank" rel="noopener noreferrer">GitHub repo →</a>
+            {p.demoUrl && (
+              <a class="link" href={p.demoUrl} target="_blank" rel="noopener noreferrer">Live demo →</a>
+            )}
+          </p>
+        </div>
+
+        <div class="pipeline-card" aria-hidden="true">
+          <svg
+            class="pipeline"
+            viewBox={`0 0 320 ${p.pipeline.length * 72}`}
+            width="100%"
+            height={p.pipeline.length * 72}
+            role="presentation"
+          >
+            {p.pipeline.map((_, i) => (
+              <Fragment>
+                {i < p.pipeline.length - 1 && (
+                  <path class="pl-line" d={`M 24 ${24 + i * 72} V ${24 + (i + 1) * 72}`} />
+                )}
+                <circle class="pl-node" cx="24" cy={24 + i * 72} r="5" />
+              </Fragment>
+            ))}
+            {p.pipeline.map((n, i) => (
+              <g class="pl-label">
+                <text x="44" y={24 + i * 72 + 4}>{n.label}</text>
+                {n.note && <text class="pl-note" x="44" y={24 + i * 72 + 22}>{n.note}</text>}
+              </g>
+            ))}
+          </svg>
+        </div>
+      </article>
+    ))}
+
+    <ul class="secondary-list">
+      {SECONDARY.map((r) => (
+        <li id={`${r.key}-intro`} class="secondary-row" data-reveal>
+          <h3 class="stitle">{r.title}</h3>
+          <span class="staga">{r.tagline}</span>
+          <span class="snote">{r.note}</span>
+          <span class="slink">
+            <a class="link" href={r.repoUrl} target="_blank" rel="noopener noreferrer">GitHub →</a>
+            {r.demoUrl && (
+              <a class="link" href={r.demoUrl} target="_blank" rel="noopener noreferrer">Live demo →</a>
+            )}
+          </span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- ================= EXPERIENCE ================= -->
+  <section id="experience" class="section">
+    <h2 class="section-label" data-reveal>Experience</h2>
+
+    {resume.experience.map((x) => (
+      <article class="xp-entry" data-reveal>
+        <p class="meta">{x.period} · {x.org}</p>
+        <p class="role">{x.role}</p>
+        <p>{x.detail}</p>
+      </article>
+    ))}
+
+    <div class="xp-entry edu-block" id="education" data-reveal>
+      <p class="meta">{resume.education.period}</p>
+      <p class="role">{resume.education.degree} — {resume.education.school}</p>
+      <p>Certification: {resume.certification}</p>
+    </div>
+  </section>
+
+  <!-- ================= SKILLS ================= -->
+  <section id="skills" class="section">
+    <h2 class="section-label" data-reveal>Skills</h2>
+    <div class="skills-grid">
+      {SKILLS_BUCKETS.map((b) => (
+        <div class="bucket" data-reveal>
+          <h4>{b.name}</h4>
+          <p class="items">
+            {b.items.map((t, i) => (
+              <Fragment>
+                {i > 0 && <span class="sep"> · </span>}{t}
+              </Fragment>
+            ))}
+          </p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ================= CONTACT / CLOSING ================= -->
+  <section id="contact" class="section closing">
+    <p class="promise" data-reveal>{EMAIL_PROMISE}</p>
+    <p class="contact-row" data-reveal>
+      <a class="email-line" href={`mailto:${copyEmail}`}>{copyEmail}</a>
+      <button class="copy-btn magnetic" type="button" data-copy-email={copyEmail}>Copy email</button>
+    </p>
+    <p class="contact-links" data-reveal>
+      <a class="link" href={gh} target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="link" href={resume.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a class="link" href="/resume/">Résumé</a>
+      <a class="link" href="/ask-gaurav/">Ask-Gaurav</a>
+    </p>
+    <p class="onepager-footer">© 2026 Gaurav Shinde · This site runs a real language model in your browser — <a class="link" href="/ask-gaurav/">try it</a>.</p>
   </section>
 </BaseLayout>
+
+<script>
+  // Astro bundles <script> modules — this runs in the browser after load.
+  import { initOnePager } from '../scripts/anim';
+  initOnePager();
+</script>
+
+<script>
+  // Email copy over the clipboard API, with a legacy fallback.
+  const btns = document.querySelectorAll<HTMLButtonElement>('.copy-btn');
+  btns.forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const email = btn.dataset.copyEmail ?? '';
+      try {
+        await navigator.clipboard.writeText(email);
+      } catch {
+        const ta = document.createElement('textarea');
+        ta.value = email;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        ta.remove();
+      }
+      const old = btn.textContent;
+      btn.textContent = 'Copied.';
+      setTimeout(() => {
+        btn.textContent = old;
+      }, 2000);
+    });
+  });
+</script>

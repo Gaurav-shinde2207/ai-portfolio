@@ -25,11 +25,17 @@ function initSplitText(): void {
 }
 
 function initHeroIntro(): void {
-  gsap.fromTo(
-    '.st-inner',
-    { yPercent: 115 },
-    { yPercent: 0, duration: 0.7, stagger: 0.04, ease: 'power3.out', delay: 0.15 }
-  );
+  // CSS pre-hides .st-inner via translateY(115%) (global.css line ~429).
+  // GSAP parses that CSS transform into px y on first touch — zero it
+  // explicitly or the parsed y survives the yPercent tween forever.
+  gsap.set('.st-inner', { y: 0, yPercent: 115 });
+  gsap.to('.st-inner', {
+    yPercent: 0,
+    duration: 0.7,
+    stagger: 0.04,
+    ease: 'power3.out',
+    delay: 0.15,
+  });
   gsap.fromTo(
     '.hero-fade',
     { opacity: 0, y: 24 },
