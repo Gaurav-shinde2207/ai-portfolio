@@ -48,6 +48,9 @@ const resumeMd = [
   ...resume.experience.map(
     (e) => `${e.role} (${e.org}, ${e.period}). ${e.detail}`
   ),
+  '',
+  '# Contact',
+  `Email: ${resume.email}. GitHub: https://github.com/${resume.github}. LinkedIn: ${resume.linkedin}.`,
 ].join('\n');
 add(resumeMd, '/resume/');
 

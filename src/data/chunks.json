@@ -28,5 +28,11 @@
     "anchor": "experience",
     "text": "Scripted, rendered, and verified Manim + voiceover explainers of current arXiv research (Heesch numbers in 3D), including LaTeX, TTS caching, and frame-level draft verification.",
     "path": "/resume/"
+  },
+  {
+    "id": "contact-1",
+    "anchor": "contact",
+    "text": "Email: shindegaurav2201@gmail.com. GitHub: https://github.com/Gaurav-shinde2207. LinkedIn: https://www.linkedin.com/in/gaurav-shinde-2182b51a1.",
+    "path": "/resume/"
   }
 ]
