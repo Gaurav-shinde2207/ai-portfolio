@@ -3,7 +3,7 @@
   "github": "Gaurav-shinde2207",
   "linkedin": "https://www.linkedin.com/in/gaurav-shinde-2182b51a1",
   "location": "Navi Mumbai, India",
-  "phone": "+91-915813546",
+  "phone": "+91-9158113546",
   "summary": "AI Engineer at TCS building Generative AI, RAG, LLM fine-tuning, and AI-agent systems with open-source LLMs (Llama), LangChain/LangGraph, vector databases, and FastAPI. Deployed a RAG chatbot for a public-sector bank client; fine-tunes small language models with LoRA/QLoRA and builds evaluation-driven pipelines covering retrieval quality, hallucination detection, and leakage-controlled benchmarks. Also ships in-browser AI: this portfolio runs a real language model in the visitor's browser — no server, no API keys.",
   "skills": [
     "LLMs & fine-tuning (Llama 3.1/3.2, SLMs, LoRA/QLoRA, Unsloth, TRL, GGUF, llama.cpp, Ollama)",

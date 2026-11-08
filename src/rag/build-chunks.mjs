@@ -53,7 +53,7 @@ const resumeMd = [
   `${resume.education.degree} — ${resume.education.school}, ${resume.education.period}. Certification: ${resume.certification}.`,
   '',
   '# Contact',
-  `Email: ${resume.email}. GitHub: https://github.com/${resume.github}. LinkedIn: ${resume.linkedin}. Location: ${resume.location ?? 'India'}.`,
+  `Email: ${resume.email}. Phone: ${resume.phone}. GitHub: https://github.com/${resume.github}. LinkedIn: ${resume.linkedin}. Location: ${resume.location ?? 'India'}.`,
 ].join('\n');
 add(resumeMd, '/resume/');
 

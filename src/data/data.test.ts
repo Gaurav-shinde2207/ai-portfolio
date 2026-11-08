@@ -62,6 +62,10 @@ describe('resume.json', () => {
     expect(resume.github).toBe('Gaurav-shinde2207');
   });
 
+  test('contains the confirmed phone number', () => {
+    expect(resume.phone).toBe('+91-9158113546');
+  });
+
   test('has the full required shape', () => {
     expect(typeof resume.linkedin).toBe('string');
     expect(typeof resume.summary).toBe('string');

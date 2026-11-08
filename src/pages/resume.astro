@@ -41,7 +41,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
 
     <h2 class="text-xl mt-8" id="contact" style="font-family: var(--font-mono);">Contact</h2>
-    <p class="mt-1"><a href={`mailto:${resume.email}`}>{resume.email}</a> · <a href={`https://github.com/${resume.github}`} rel="noopener">github.com/{resume.github}</a> · <a href={resume.linkedin} rel="noopener">LinkedIn</a></p>
+    <p class="mt-1"><a href={`mailto:${resume.email}`}>{resume.email}</a> · <a href={`tel:${resume.phone.replace(/\s/g, '')}`}>{resume.phone}</a> · <a href={`https://github.com/${resume.github}`} rel="noopener">github.com/{resume.github}</a> · <a href={resume.linkedin} rel="noopener">LinkedIn</a></p>
   </section>
 </BaseLayout>
 

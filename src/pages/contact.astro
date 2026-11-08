@@ -10,6 +10,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <p class="mt-4 text-xl">
       <a class="link" href={`mailto:${resume.email}`}>{resume.email}</a>
     </p>
+    <p class="mt-2 text-xl">
+      <a class="link" href={`tel:${resume.phone.replace(/\s/g, '')}`}>{resume.phone}</a>
+    </p>
     <div class="mt-6 flex gap-4">
     <a class="link" href={`https://github.com/${resume.github}`} rel="noopener">GitHub</a>
       <a class="link" href={resume.linkedin} rel="noopener">LinkedIn</a>
