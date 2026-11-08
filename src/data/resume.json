@@ -1,0 +1,40 @@
+{
+  "email": "shindegaurav2201@gmail.com",
+  "github": "Gaurav-shinde2207",
+  "linkedin": "https://www.linkedin.com/in/gaurav-shinde-2182b51a1",
+  "summary": "AI engineer building in-browser AI systems: local LLM inference, embeddings-driven retrieval, and evaluation-first workflows. Ships sites that run a real language model in the visitor's browser — no server, no API keys, no data leaving the device.",
+  "skills": [
+    "AI engineering",
+    "RAG (retrieval-augmented generation)",
+    "LLM inference (WebLLM, wllama)",
+    "Embeddings (sentence-transformers, all-MiniLM-L6-v2)",
+    "Agent tooling (OpenCode, plugins, MCP)",
+    "Python",
+    "TypeScript",
+    "Astro",
+    "React",
+    "Manim / technical animation",
+    "Git",
+    "Firebase Hosting"
+  ],
+  "experience": [
+    {
+      "role": "AI Engineer — OpenCode plugin & agent ecosystem",
+      "org": "Independent",
+      "period": "2026",
+      "detail": "Audited ~25 OpenCode plugins against the V1→V2 plugin API, verified which architectures load, and installed/ported local builds. Maintains a personal Obsidian second brain that agents read at session start."
+    },
+    {
+      "role": "Builder — in-browser AI systems",
+      "org": "Independent",
+      "period": "2026",
+      "detail": "Built an in-browser RAG assistant: build-time MiniLM embeddings, cosine top-k retrieval, a retrieval-score router between grounded and general-AI modes, and WebLLM streaming with a WASM fallback ladder — all client-side, eval-tested."
+    },
+    {
+      "role": "Creator — math explainer video pipeline",
+      "org": "Independent",
+      "period": "2026",
+      "detail": "Scripted, rendered, and verified Manim + voiceover explainers of current arXiv research (Heesch numbers in 3D), including LaTeX, TTS caching, and frame-level draft verification."
+    }
+  ]
+}
