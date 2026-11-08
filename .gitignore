@@ -8,6 +8,7 @@ dist/
 # caches
 .vercel/
 .netlify/
+.firebase/
 
 # SDD scratch workspace
 .superpowers/
