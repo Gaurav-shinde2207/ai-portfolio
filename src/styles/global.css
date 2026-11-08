@@ -245,6 +245,45 @@ html {
   font-family: var(--font-mono);
   font-size: 0.8rem;
 }
+
+.eval-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+
+.eval-table th,
+.eval-table td {
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--muted) 25%, transparent);
+  vertical-align: top;
+}
+
+.eval-table th {
+  font-family: var(--font-mono);
+  color: var(--muted);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+}
+
+.eval-pass td:nth-child(4) {
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+
+.eval-fail td:nth-child(4) {
+  color: #ff6b6b;
+  font-family: var(--font-mono);
+}
+
+.eval-table td:nth-child(5) {
+  color: var(--muted);
+  max-width: 22rem;
+}
 .link-button {
   background: none;
   border: none;
