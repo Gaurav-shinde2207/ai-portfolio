@@ -1,0 +1,197 @@
+---
+// Terminal-style hero: typed intro (once) + cursor-reactive neural-node canvas.
+// Degrades to a static gradient under prefers-reduced-motion or when canvas
+// 2D context is unavailable.
+const introLines = [
+  '$ whoami',
+  'Gaurav Shashikant Shinde — AI Engineer',
+  '$ cat focus.txt',
+  'in-browser LLMs · RAG · embeddings · agent tooling',
+  '$ status',
+  'site ships with a local language model — ask it anything below',
+];
+---
+<section id="hero" class="hero">
+  <canvas class="hero-canvas" aria-hidden="true"></canvas>
+  <div class="hero-inner" data-hero-inner>
+    <pre class="terminal" data-typed aria-label={introLines.join(' ')}></pre>
+    <p class="hero-sub" data-static-sub hidden>Building in-browser AI systems. This site runs a real local language model.</p>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: linear-gradient(160deg, var(--surface) 0%, var(--bg) 60%);
+  }
+  .hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    width: 100%;
+  }
+  .terminal {
+    font-family: var(--font-mono);
+    font-size: clamp(0.9rem, 2.2vw, 1.25rem);
+    line-height: 1.8;
+    color: var(--text);
+    white-space: pre-wrap;
+    min-height: 11em;
+  }
+  .terminal :global(.cmd) { color: var(--accent); }
+  .terminal :global(.out) { color: var(--muted); }
+  .terminal :global(.caret) {
+    display: inline-block;
+    width: 0.55em;
+    height: 1.1em;
+    background: var(--accent);
+    vertical-align: text-bottom;
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  .hero-sub {
+    margin-top: 1.5rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+  }
+</style>
+
+<script>
+  const lines = [
+    { cls: 'cmd', text: '$ whoami' },
+    { cls: 'out', text: 'Gaurav Shashikant Shinde — AI Engineer' },
+    { cls: 'cmd', text: '$ cat focus.txt' },
+    { cls: 'out', text: 'in-browser LLMs · RAG · embeddings · agent tooling' },
+    { cls: 'cmd', text: '$ status' },
+    { cls: 'out', text: 'site ships with a local language model — ask it anything below' },
+  ];
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const el = document.querySelector<HTMLElement>('[data-typed]');
+  const staticSub = document.querySelector<HTMLElement>('[data-static-sub]');
+
+  // --- neural node field -------------------------------------------------
+  const canvas = document.querySelector<HTMLCanvasElement>('canvas.hero-canvas');
+  const ctx = canvas?.getContext('2d') ?? null;
+  const canAnimate = !reduced && !!ctx && !!canvas;
+
+  if (!canAnimate && canvas) canvas.style.display = 'none';
+
+  if (canAnimate && ctx && canvas) {
+    interface Node { x: number; y: number; vx: number; vy: number; }
+    let nodes: Node[] = [];
+    let w = 0, h = 0;
+    const mouse = { x: -9999, y: -9999 };
+    const LINK_DIST = 120, MOUSE_RADIUS = 160, NODE_COUNT_MAX = 90;
+
+    const resize = () => {
+      const rect = canvas!.getBoundingClientRect();
+      w = canvas!.width = rect.width * devicePixelRatio;
+      h = canvas!.height = rect.height * devicePixelRatio;
+      const count = Math.min(NODE_COUNT_MAX, Math.floor((rect.width * rect.height) / 16000));
+      nodes = Array.from({ length: count }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.35 * devicePixelRatio,
+        vy: (Math.random() - 0.5) * 0.35 * devicePixelRatio,
+      }));
+    };
+    resize();
+    window.addEventListener('resize', resize);
+    canvas!.addEventListener('pointermove', (e) => {
+      const rect = canvas!.getBoundingClientRect();
+      mouse.x = (e.clientX - rect.left) * devicePixelRatio;
+      mouse.y = (e.clientY - rect.top) * devicePixelRatio;
+    });
+    canvas!.addEventListener('pointerleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+    const accent = '0, 229, 160';
+    const step = () => {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, w, h);
+      for (const n of nodes) {
+        const dx = n.x - mouse.x, dy = n.y - mouse.y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < MOUSE_RADIUS * MOUSE_RADIUS) {
+          const d = Math.sqrt(d2) || 1;
+          const push = (MOUSE_RADIUS - d) * 0.012 * devicePixelRatio;
+          n.vx += (dx / d) * push;
+          n.vy += (dy / d) * push;
+        }
+        n.vx *= 0.98; n.vy *= 0.98;
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > w) n.vx *= -1;
+        if (n.y < 0 || n.y > h) n.vy *= -1;
+      }
+      ctx.strokeStyle = `rgba(${accent}, 0.14)`;
+      ctx.lineWidth = 1;
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i], b = nodes[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          if (dx * dx + dy * dy < LINK_DIST * LINK_DIST) {
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+      for (const n of nodes) {
+        ctx.fillStyle = `rgba(${accent}, 0.65)`;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, 1.6 * devicePixelRatio, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  // --- typing intro (types once, caret then removed) ----------------------
+  if (el) {
+    if (reduced || !canAnimate) {
+      el.textContent = lines.map((l) => l.text).join('\n');
+      el.className = 'terminal out';
+      if (staticSub) staticSub.hidden = false;
+    } else {
+      let li = 0, ci = 0, killed = false;
+      const onVision = () => { killed = true; };
+      document.addEventListener('visibilitychange', onVision);
+      const tick = () => {
+        if (killed) return;
+        const caret = '<span class="caret"></span>';
+        let html = '';
+        for (let i = 0; i < lines.length; i++) {
+          const text = i < li ? lines[i].text : i === li ? lines[i].text.slice(0, ci) : '';
+          html += `<span class="${lines[i].cls}">${text}</span>\n`;
+        }
+        el.innerHTML = html + caret;
+        if (li < lines.length) {
+          if (ci < lines[li].text.length) {
+            ci++;
+            setTimeout(tick, 18);
+          } else {
+            li++; ci = 0;
+            setTimeout(tick, li < lines.length ? 350 : 1200);
+          }
+        } else {
+          el.querySelector('.caret')?.remove();
+        }
+      };
+      tick();
+    }
+  }
+</script>

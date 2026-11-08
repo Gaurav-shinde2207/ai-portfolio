@@ -1,0 +1,10 @@
+---
+// Scroll-reveal wrapper: add data-reveal to anything you want to fade up once.
+---
+<div class="reveal-wrap" data-reveal>
+  <slot />
+</div>
+<script>
+  import { initScrollReveal } from '../lib/gsap-init';
+  initScrollReveal();
+</script>
