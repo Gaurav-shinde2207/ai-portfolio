@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ai-portfolio-gs.web.app/sitemap.xml

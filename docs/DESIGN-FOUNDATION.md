@@ -150,10 +150,11 @@ not JSX, when facts change.
 ## 10. Meta/SEO status
 
 `index.html`: title/description/theme-color/favicon/OG+twitter complete.
-Gap to close before broad sharing: og:image asset + `og:image:alt`,
-canonical URL fix (`og:url` currently points at a github.io placeholder —
-update to the final domain when deploying), plus `sitemap.xml` +
-`robots.txt` if the host allows.
+OG image: `public/og-image.png` (1200×630, brand-consistent card on the
+site's own tokens). Canonical + `og:url` = `https://ai-portfolio-gs.web.app/`,
+`twitter:card = summary_large_image`. `sitemap.xml` + `robots.txt` live
+in `public/`. Remaining follow-up: if the site moves to a custom domain,
+update canonical, `og:url`, `og:image`, and both sitemap URLs in one pass.
 
 ## 11. New-screen checklist
 
