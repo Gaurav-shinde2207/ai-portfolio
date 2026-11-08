@@ -1,68 +1,68 @@
 [
   {
-    "id": "intro-1",
-    "anchor": "intro",
-    "text": "An end-to-end cafe platform where ordering happens through an AI chat agent built on Google Gemini. The conversation layer is served by a FastAPI backend that talks to Cloud SQL for state, and the whole thing runs as a Cloud Run service — a real, publicly reachable deployment rather than a localhost demo. The live URL above is the actual production service: send a message, and the agent interprets the order, grounds it in menu data, and handles the back-and-forth.",
-    "path": "/projects/cafemind/"
+    "id": "cafemind-intro-1",
+    "anchor": "cafemind-intro",
+    "path": "/",
+    "text": "An end-to-end cafe platform where ordering happens through an AI chat agent built on Google Gemini. The conversation layer is served by a FastAPI backend that talks to Cloud SQL for state, and the whole thing runs as a Cloud Run service — a real, publicly reachable deployment rather than a localhost demo. The live URL above is the actual production service: send a message, and the agent interprets the order, grounds it in menu data, and handles the back-and-forth."
   },
   {
-    "id": "intro-1",
-    "anchor": "intro",
-    "text": "A complete ML engineering exercise: from raw customer data to a deployed scoring API. Model optimization covers threshold tuning (rather than defaulting to 0.5) and balanced training with SMOTE, and the trained artifact sits behind a FastAPI endpoint that consumes feature vectors and returns predictions.",
-    "path": "/projects/customer-churn-ml-api/"
+    "id": "customer-churn-intro-1",
+    "anchor": "customer-churn-intro",
+    "path": "/",
+    "text": "A complete ML engineering exercise: from raw customer data to a deployed scoring API. Model optimization covers threshold tuning (rather than defaulting to 0.5) and balanced training with SMOTE, and the trained artifact sits behind a FastAPI endpoint that consumes feature vectors and returns predictions."
   },
   {
-    "id": "intro-1",
-    "anchor": "intro",
-    "text": "Grounded question-answering over financial documents: PDF upload, page-level extraction with PyMuPDF, section-aware overlapping chunks, BGE embeddings into persistent ChromaDB, and answer generation behind REST APIs (FastAPI + Streamlit UI, Docker Compose). Every answer ships with file/page/section citations and similarity scores — and when no relevant chunk is retrieved, the system returns an insufficient-context response instead of calling the LLM. Evaluation is built in: RAGAS metrics, NDCG@k, deterministic sentence-level hallucination detection, and a benchmark runner that flags faithfulness regressions, exposed through a FastAPI /evaluate endpoint.",
-    "path": "/projects/finsight/"
+    "id": "finsight-intro-1",
+    "anchor": "finsight-intro",
+    "path": "/",
+    "text": "Grounded question-answering over financial documents: PDF upload, page-level extraction with PyMuPDF, section-aware overlapping chunks, BGE embeddings into persistent ChromaDB, and answer generation behind REST APIs (FastAPI + Streamlit UI, Docker Compose). Every answer ships with file/page/section citations and similarity scores — and when no relevant chunk is retrieved, the system returns an insufficient-context response instead of calling the LLM. Evaluation is built in: RAGAS metrics, NDCG@k, deterministic sentence-level hallucination detection, and a benchmark runner that flags faithfulness regressions, exposed through a FastAPI /evaluate endpoint."
   },
   {
-    "id": "intro-1",
-    "anchor": "intro",
-    "text": "Fine-tuned Llama 3.2 3B Instruct with QLoRA on 150 SQL-to-explanation examples covering CTEs, window functions, and JOINs — trained in under 1 GPU-hour on a Kaggle T4 and exported to a ~2 GB Q4_K_M GGUF model, published at huggingface.co/ShindeGaurav-207/SQL2NL and served through FastAPI with llama.cpp/Ollama. Quality is measured, not asserted: a keyword-coverage, MiniLM semantic-similarity, and latency harness scores held-out queries — 6/8 passed with 0.74 average semantic similarity and 65.1% keyword coverage. pytest tests and GitHub Actions CI keep the pipeline reproducible end to end.",
-    "path": "/projects/sql2nl/"
+    "id": "sql2nl-intro-1",
+    "anchor": "sql2nl-intro",
+    "path": "/",
+    "text": "Fine-tuned Llama 3.2 3B Instruct with QLoRA on 150 SQL-to-explanation examples covering CTEs, window functions, and JOINs — trained in under 1 GPU-hour on a Kaggle T4 and exported to a ~2 GB Q4_K_M GGUF model, published at huggingface.co/ShindeGaurav-207/SQL2NL and served through FastAPI with llama.cpp/Ollama. Quality is measured, not asserted: a keyword-coverage, MiniLM semantic-similarity, and latency harness scores held-out queries — 6/8 passed with 0.74 average semantic similarity and 65.1% keyword coverage. pytest tests and GitHub Actions CI keep the pipeline reproducible end to end."
   },
   {
-    "id": "intro-1",
-    "anchor": "intro",
-    "text": "A LangGraph agent turns natural language into SQL: intent parsing, example retrieval, SQL generation, execution, validation, and up to 3 bounded self-correction retries, exposed through both a CLI and a FastAPI endpoint. Security is first-class: read-only SQL execution behind a SELECT/WITH-only statement gate, a read-only database connection, a LIMIT guard, and a query timeout — with a STRIDE threat model covering cache poisoning. The evaluation is leakage-controlled on 28 held-out Chinook questions: baseline 60.7%, retry-only 57.1%, retry plus correction memory 57.1% execution accuracy. Correction memory gave no measurable gain (overlapping 95% CIs) and nested queries were weakest at 28.6% — both honest results reported, not hidden. 150 offline tests back the pipeline.",
-    "path": "/projects/sqlmind/"
+    "id": "sqlmind-intro-1",
+    "anchor": "sqlmind-intro",
+    "path": "/",
+    "text": "A LangGraph agent turns natural language into SQL: intent parsing, example retrieval, SQL generation, execution, validation, and up to 3 bounded self-correction retries, exposed through both a CLI and a FastAPI endpoint. Security is first-class: read-only SQL execution behind a SELECT/WITH-only statement gate, a read-only database connection, a LIMIT guard, and a query timeout — with a STRIDE threat model covering cache poisoning. The evaluation is leakage-controlled on 28 held-out Chinook questions: baseline 60.7%, retry-only 57.1%, retry plus correction memory 57.1% execution accuracy. Correction memory gave no measurable gain (overlapping 95% CIs) and nested queries were weakest at 28.6% — both honest results reported, not hidden. 150 offline tests back the pipeline."
   },
   {
     "id": "summary-1",
     "anchor": "summary",
-    "text": "AI Engineer at TCS building Generative AI, RAG, LLM fine-tuning, and AI-agent systems with open-source LLMs (Llama), LangChain/LangGraph, vector databases, and FastAPI. Deployed a RAG chatbot for a public-sector bank client; fine-tunes small language models with LoRA/QLoRA and builds evaluation-driven pipelines covering retrieval quality, hallucination detection, and leakage-controlled benchmarks. Also ships in-browser AI: this portfolio runs a real language model in the visitor's browser — no server, no API keys.",
-    "path": "/resume/"
+    "path": "/",
+    "text": "AI Engineer at TCS building Generative AI, RAG, LLM fine-tuning, and AI-agent systems with open-source LLMs (Llama), LangChain/LangGraph, vector databases, and FastAPI. Deployed a RAG chatbot for a public-sector bank client; fine-tunes small language models with LoRA/QLoRA and builds evaluation-driven pipelines covering retrieval quality, hallucination detection, and leakage-controlled benchmarks. Also ships in-browser AI: this portfolio runs a real language model in the visitor's browser — no server, no API keys."
   },
   {
     "id": "skills-1",
     "anchor": "skills",
-    "text": "LLMs & fine-tuning (Llama 3.1/3.2, SLMs, LoRA/QLoRA, Unsloth, TRL, GGUF, llama.cpp, Ollama). RAG & retrieval (ChromaDB, Sentence Transformers, BGE, semantic search, citation-grounded generation). AI agents (LangChain, LangGraph, tool calling, self-correction loops, text-to-SQL). LLM evaluation & safety (RAGAS, NDCG, execution accuracy, hallucination detection, leakage control, STRIDE threat modeling). Python, PyTorch, FastAPI, REST APIs, Docker, Docker Compose, GitHub Actions, pytest. SQL, SQLite, Pandas, NumPy. In-browser LLM inference (WebLLM, wllama, MiniLM embeddings). TypeScript, Astro, React, Git, CI/CD.",
-    "path": "/resume/"
+    "path": "/",
+    "text": "LLMs & fine-tuning (Llama 3.1/3.2, SLMs, LoRA/QLoRA, Unsloth, TRL, GGUF, llama.cpp, Ollama). RAG & retrieval (ChromaDB, Sentence Transformers, BGE, semantic search, citation-grounded generation). AI agents (LangChain, LangGraph, tool calling, self-correction loops, text-to-SQL). LLM evaluation & safety (RAGAS, NDCG, execution accuracy, hallucination detection, leakage control, STRIDE threat modeling). Python, PyTorch, FastAPI, REST APIs, Docker, Docker Compose, GitHub Actions, pytest. SQL, SQLite, Pandas, NumPy. In-browser LLM inference (WebLLM, wllama, MiniLM embeddings). TypeScript, Astro, React, Git, CI/CD."
   },
   {
     "id": "experience-1",
     "anchor": "experience",
-    "text": "AI Engineer (Tata Consultancy Services (TCS), 2024 – Present). Built and deployed a client-facing RAG chatbot enabling branch staff of a public-sector bank to resolve recurring transaction issues — interest-rate errors and data-correction requests — in real time. Architected the pipeline on LangChain, Llama 3.1 8B (Ollama), BAAI/bge-small-en-v1.5 embeddings, and Oracle Database as the vector store. Designed the AI-assisted resolution workflow that lets branches resolve 75% of identified service-desk requests without backend-analyst escalation. Builder — in-browser AI systems (Independent, 2026).",
-    "path": "/resume/"
+    "path": "/",
+    "text": "AI Engineer (Tata Consultancy Services (TCS), 2024 – Present). Built and deployed a client-facing RAG chatbot enabling branch staff of a public-sector bank to resolve recurring transaction issues — interest-rate errors and data-correction requests — in real time. Architected the pipeline on LangChain, Llama 3.1 8B (Ollama), BAAI/bge-small-en-v1.5 embeddings, and Oracle Database as the vector store. Designed the AI-assisted resolution workflow that lets branches resolve 75% of identified service-desk requests without backend-analyst escalation. Builder — in-browser AI systems (Independent, 2026)."
   },
   {
     "id": "experience-2",
     "anchor": "experience",
-    "text": "Built an in-browser RAG assistant: build-time MiniLM embeddings, cosine top-k retrieval, a retrieval-score router between grounded and general-AI modes, and WebLLM streaming with a WASM fallback ladder — all client-side, eval-tested. This portfolio is itself the demo.",
-    "path": "/resume/"
+    "path": "/",
+    "text": "Built an in-browser RAG assistant: build-time MiniLM embeddings, cosine top-k retrieval, a retrieval-score router between grounded and general-AI modes, and WebLLM streaming with a WASM fallback ladder — all client-side, eval-tested. This portfolio is itself the demo."
   },
   {
     "id": "education-1",
     "anchor": "education",
-    "text": "B.Tech, Mechanical Engineering — Annasaheb Dange College of Engineering and Technology, Ashta, 2019 – 2023. Certification: Generative AI with Large Language Models.",
-    "path": "/resume/"
+    "path": "/",
+    "text": "B.Tech, Mechanical Engineering — Annasaheb Dange College of Engineering and Technology, Ashta, 2019 – 2023. Certification: Generative AI with Large Language Models."
   },
   {
     "id": "contact-1",
     "anchor": "contact",
-    "text": "Email: shindegaurav2201@gmail.com. Phone: +91-9158113546. GitHub: https://github.com/Gaurav-shinde2207. LinkedIn: https://www.linkedin.com/in/gaurav-shinde-2182b51a1. Location: Navi Mumbai, India.",
-    "path": "/resume/"
+    "path": "/",
+    "text": "Email: shindegaurav2201@gmail.com. Phone: +91-9158113546. GitHub: https://github.com/Gaurav-shinde2207. LinkedIn: https://www.linkedin.com/in/gaurav-shinde-2182b51a1. Location: Navi Mumbai, India."
   }
 ]

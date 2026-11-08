@@ -20,22 +20,25 @@ const DIM = 384;
 // ---------- corpus ----------
 const corpus = []; // { id, anchor, path, text }
 
-function add(mdText, path) {
+function add(mdText, path, anchorPrefix = '') {
   for (const chunk of splitIntoChunks(mdText, { maxChars: MAX_CHARS })) {
-    corpus.push({ ...chunk, path });
+    const anchor = anchorPrefix ? `${anchorPrefix}-${chunk.anchor}` : chunk.anchor;
+    corpus.push({ id: `${anchor}-${chunk.id.split('-').pop()}`, anchor, path, text: chunk.text });
   }
 }
 
-// projects: src/content/projects/*.md, path -> /projects/<id>/
+// projects: src/content/projects/*.md, path -> /#<repo>-<anchor> on the one-pager
 const projectsDir = join(root, 'src', 'content', 'projects');
 for (const name of readdirSync(projectsDir).sort()) {
   if (!name.endsWith('.md')) continue;
   const raw = readFileSync(join(projectsDir, name), 'utf8');
   const body = raw.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '');
-  add(body, `/projects/${name.replace(/\.md$/, '')}/`);
+  // one-pager citation anchors are repo-slug prefixed; path -> '/'
+  const slug = name.replace(/\.md$/, '').replace('customer-churn-ml-api', 'customer-churn');
+  add(body, '/', slug);
 }
 
-// resume: synthesized markdown, path -> /resume/
+// resume: synthesized markdown, path -> / (anchors = section ids on the one-pager)
 const resume = JSON.parse(readFileSync(join(root, 'src', 'data', 'resume.json'), 'utf8'));
 const resumeMd = [
   '# Summary',
@@ -55,7 +58,7 @@ const resumeMd = [
   '# Contact',
   `Email: ${resume.email}. Phone: ${resume.phone}. GitHub: https://github.com/${resume.github}. LinkedIn: ${resume.linkedin}. Location: ${resume.location ?? 'India'}.`,
 ].join('\n');
-add(resumeMd, '/resume/');
+add(resumeMd, '/');
 
 // ---------- embeddings ----------
 const extractor = await pipeline('feature-extraction', MODEL);

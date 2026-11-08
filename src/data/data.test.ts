@@ -4,24 +4,25 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { load as yamlLoad } from 'js-yaml';
 import { projectsSchema } from './content-schema';
+import { PROJECTS, SECONDARY } from './onep';
 
 const here = dirname(fileURLToPath(import.meta.url));
 
-describe('projects content collection', () => {
-  const REPOS = [
-    'ai-portfolio',
-    'Gaurav-shinde2207',
-    'CafeMind',
-    'SQLmind',
-    'SQL2NL',
-    'customer-churn-ml-api',
-    'finsight-financial-rag-system',
-    'my_Leetcode_journey',
-    'Credit-Card-Fraud-Detection-using-ML',
-    'Parkison-Disease-Prediction-using-ML',
-    'House-Price-Prediction',
-  ];
+const REPOS = [
+  'ai-portfolio',
+  'Gaurav-shinde2207',
+  'CafeMind',
+  'SQLmind',
+  'SQL2NL',
+  'customer-churn-ml-api',
+  'finsight-financial-rag-system',
+  'my_Leetcode_journey',
+  'Credit-Card-Fraud-Detection-using-ML',
+  'Parkison-Disease-Prediction-using-ML',
+  'House-Price-Prediction',
+];
 
+describe('projects content collection', () => {
   test('loads at least 1 project and every project passes the schema', () => {
     const dir = join(here, '../content/projects');
     const files = readdirSync(dir).filter((f) => f.endsWith('.md'));
@@ -96,5 +97,47 @@ describe('resume.json', () => {
   test('has education and certification from the resume', () => {
     expect((resume.education as { school: string }).school).toContain('Annasaheb Dange');
     expect(resume.certification as string).toContain('Generative AI with Large Language Models');
+  });
+});
+
+describe('one-pager data (src/data/onep.ts)', () => {
+  test('every featured project is a known GitHub repo under Gaurav-shinde2207', () => {
+    for (const p of [...PROJECTS, ...SECONDARY]) {
+      expect(p.repoUrl, `${p.key} repoUrl must be a real Gaurav repo`).toMatch(
+        /^https:\/\/github\.com\/Gaurav-shinde2207\/[^/]+$/
+      );
+      expect(REPOS, `${p.key} references unknown repo`).toContain(
+        p.repoUrl.replace('https://github.com/Gaurav-shinde2207/', '')
+      );
+    }
+  });
+
+  test('deep stages carry the headline metric and both prose blocks', () => {
+    for (const p of PROJECTS) {
+      expect(p.kpis.length).toBeGreaterThanOrEqual(3);
+      expect(p.problem.trim().length, `${p.key} needs "The problem."`).toBeGreaterThan(40);
+      expect(p.build.trim().length, `${p.key} needs "What I built."`).toBeGreaterThan(40);
+      expect(p.outcomes.length).toBeGreaterThanOrEqual(2);
+    }
+  });
+});
+
+describe('rag corpus anchors', () => {
+  const chunks = JSON.parse(
+    readFileSync(join(here, 'chunks.json'), 'utf8'),
+  ) as Array<{ id: string; anchor: string; path: string; text: string }>;
+
+  test('project content is repo-prefixed and cites the one-pager', () => {
+    const projectChunks = chunks.filter((c) => c.path === '/' && /^.+-intro$/.test(c.anchor));
+    expect(projectChunks.length).toBeGreaterThanOrEqual(5);
+    for (const c of projectChunks) {
+      expect(c.anchor).toMatch(/^(sqlmind|sql2nl|finsight|cafemind|customer-churn)-intro$/);
+    }
+  });
+
+  test('resume chunks cite the one-pager sections', () => {
+    for (const a of ['summary', 'skills', 'experience', 'education', 'contact']) {
+      expect(chunks.some((c) => c.anchor === a && c.path === '/'), `missing anchor ${a}`).toBe(true);
+    }
   });
 });

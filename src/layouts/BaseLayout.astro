@@ -6,16 +6,18 @@ type Props = {
   description?: string;
 };
 
-const { title, description = 'Gaurav Shashikant Shinde — AI Engineer' } = Astro.props;
+const { title, description = 'Gaurav Shinde — AI Engineer. Grounded RAG, fine-tuned small models, evaluation-first AI systems.' } = Astro.props;
 const path = Astro.url.pathname.replace(/\/$/, '');
+
+// One-pager anchor nav. '#' targets resolve to '/' on sub-pages.
 const links = [
-  { href: '/', label: 'Home' },
-  { href: '/projects/', label: 'Projects' },
-  { href: '/resume/', label: 'Résumé' },
-  { href: '/contact/', label: 'Contact' },
+  { href: '/#summary', label: 'About' },
+  { href: '/#projects', label: 'Projects' },
+  { href: '/#experience', label: 'Experience' },
+  { href: '/#skills', label: 'Skills' },
+  { href: '/#contact', label: 'Contact' },
 ];
-const isActive = (href: string) =>
-  href === '/' ? path === '' : path === href.replace(/\/$/, '');
+const isActive = (href: string) => href.startsWith('/#') === false && path === href.replace(/\/$/, '');
 ---
 
 <!doctype html>
@@ -25,33 +27,26 @@ const isActive = (href: string) =>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <meta name="theme-color" content="#000000" />
     <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet" />
   </head>
   <body class="site-body min-h-screen antialiased">
-    <header class="px-6 py-4" style="font-family: var(--font-mono);">
-      <a href="/">Gaurav Shashikant Shinde</a>
-      <span style="color: var(--muted);"> · </span>
-      <a href="mailto:shindegaurav2201@gmail.com">shindegaurav2201@gmail.com</a>
+    <a href="#main" class="sr-only">Skip to content</a>
+    <header class="top-nav">
+      <a class="brand" href="/">G<span>•</span>Shinde</a>
+      <nav class="nav-links" aria-label="Main">
+        {links.map((l) => (
+          <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
+        ))}
+        <a href="/ask-gaurav/" aria-current={isActive('/ask-gaurav/') ? 'page' : undefined}>Ask-Gaurav</a>
+      </nav>
     </header>
 
-    <nav class="site-nav-left site-nav hidden lg:flex" aria-label="Main">
-      {links.map((l) => (
-        <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
-      ))}
-      <a href="/ask-gaurav/" aria-current={isActive('/ask-gaurav/') ? 'page' : undefined}>Ask-Gaurav</a>
-    </nav>
-    <nav class="site-nav flex flex-wrap gap-4 px-6 py-2 lg:hidden" aria-label="Main">
-      {links.map((l) => (
-        <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}>{l.label}</a>
-      ))}
-      <a href="/ask-gaurav/" aria-current={isActive('/ask-gaurav/') ? 'page' : undefined}>Ask-Gaurav</a>
-    </nav>
-
-    <main class="layout-main px-6">
+    <main id="main" class="layout-main">
       <slot />
     </main>
-    <footer class="layout-main px-6 py-8" style="color: var(--muted); font-family: var(--font-mono);">
-      © 2026 Gaurav Shashikant Shinde
-    </footer>
   </body>
 </html>
