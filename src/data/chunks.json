@@ -1,0 +1,32 @@
+[
+  {
+    "id": "intro-1",
+    "anchor": "intro",
+    "text": "A hybrid ThreeDScene + VoiceoverScene pipeline that turns dense math (Bašić, \"The Heesch number in E³ is unbounded\", arXiv:2610.24281) into a narrated, frame-checked animation. The second scene re-imagined the same math as a flat vector \"rings\" visual with a dimension ladder and a big red No. card. Rendering is fully scripted: portable TinyTeX for pdflatex, cached narration mp3s for offline re-renders, and deterministic 480p15 drafts verified frame by frame before any 1080p60 final.",
+    "path": "/projects/heesch-explainer-videos/"
+  },
+  {
+    "id": "summary-1",
+    "anchor": "summary",
+    "text": "AI engineer building in-browser AI systems: local LLM inference, embeddings-driven retrieval, and evaluation-first workflows. Ships sites that run a real language model in the visitor's browser — no server, no API keys, no data leaving the device.",
+    "path": "/resume/"
+  },
+  {
+    "id": "skills-1",
+    "anchor": "skills",
+    "text": "AI engineering. RAG (retrieval-augmented generation). LLM inference (WebLLM, wllama). Embeddings (sentence-transformers, all-MiniLM-L6-v2). Agent tooling (OpenCode, plugins, MCP). Python. TypeScript. Astro. React. Manim / technical animation. Git. Firebase Hosting.",
+    "path": "/resume/"
+  },
+  {
+    "id": "experience-1",
+    "anchor": "experience",
+    "text": "AI Engineer — OpenCode plugin & agent ecosystem (Independent, 2026). Audited ~25 OpenCode plugins against the V1→V2 plugin API, verified which architectures load, and installed/ported local builds. Maintains a personal Obsidian second brain that agents read at session start. Builder — in-browser AI systems (Independent, 2026). Built an in-browser RAG assistant: build-time MiniLM embeddings, cosine top-k retrieval, a retrieval-score router between grounded and general-AI modes, and WebLLM streaming with a WASM fallback ladder — all client-side, eval-tested. Creator — math explainer video pipeline (Independent, 2026).",
+    "path": "/resume/"
+  },
+  {
+    "id": "experience-2",
+    "anchor": "experience",
+    "text": "Scripted, rendered, and verified Manim + voiceover explainers of current arXiv research (Heesch numbers in 3D), including LaTeX, TTS caching, and frame-level draft verification.",
+    "path": "/resume/"
+  }
+]

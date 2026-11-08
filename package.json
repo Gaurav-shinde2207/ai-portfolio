@@ -10,10 +10,12 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "vitest run"
+    "test": "vitest run",
+    "build:data": "node src/rag/build-chunks.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^7.1.4",
+    "@huggingface/transformers": "^4.3.2",
     "@tailwindcss/vite": "^4.3.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
