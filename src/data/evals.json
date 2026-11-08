@@ -20,7 +20,7 @@
     "expectedKeywords": ["in-browser", "retrieval"]
   },
   {
-    "q": "Which embedding model does Gaurav's RAG stack use?",
+    "q": "Which embedding model is named in Gaurav's skills list?",
     "expectedKeywords": ["MiniLM"]
   },
   {
@@ -32,11 +32,11 @@
     "expectedKeywords": ["plugin", "V1"]
   },
   {
-    "q": "Has Gaurav built a natural-language-to-SQL system?",
-    "expectedKeywords": ["SQLmind"]
+    "q": "What library did Gaurav use to build his self-correcting NL-to-SQL agent?",
+    "expectedKeywords": ["LangGraph"]
   },
   {
-    "q": "Does Gaurav have a live deployed demo?",
+    "q": "What platform runs Gaurav's CafeMind live demo?",
     "expectedKeywords": ["Cloud Run"]
   },
   {
@@ -44,12 +44,12 @@
     "expectedKeywords": ["TypeScript", "Astro"]
   },
   {
-    "q": "Does Gaurav work with Python?",
+    "q": "Which language does Gaurav use for his machine learning projects?",
     "expectedKeywords": ["Python"]
   },
   {
-    "q": "What is retrieval-augmented generation?",
-    "expectedKeywords": ["retrieval", "context"]
+    "q": "What does RAG augment an LLM's answers with?",
+    "expectedKeywords": ["retrieval"]
   },
   {
     "q": "Explain what an embedding is.",
