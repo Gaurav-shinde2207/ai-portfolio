@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0a0e14;
+  --surface: #11161f;
+  --surface-2: #151c27;
+  --accent: #00e5a0;
+  --accent-2: #7c6cff;
+  --text: #e6edf3;
+  --muted: #8b98a9;
+  --font-mono: "JetBrains Mono", "Fira Code", Consolas, "Courier New", monospace;
+}
+
+html {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+code,
+pre {
+  font-family: var(--font-mono);
+}
