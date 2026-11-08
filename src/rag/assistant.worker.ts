@@ -14,8 +14,8 @@ import type { ChunkRecord, Corpus } from './types';
 import type { WorkerToMain } from './protocol';
 
 const MODEL_ID = 'Llama-3.2-1B-Instruct-q4f16_1-MLC';
-const WLLAMA_REPO = 'ggml-org/models';
-const WLLAMA_FILE = 'tinyllamas/stories260K.gguf';
+const WLLAMA_REPO = 'Qwen/Qwen2.5-0.5B-Instruct-GGUF';
+const WLLAMA_FILE = 'qwen2.5-0.5b-instruct-q4_k_m.gguf';
 const WLLAMA_CTX = 2048;
 // Tiny WASM engines have small contexts: cap each retrieved hit's text.
 const WLLAMA_HIT_CHARS = 300;

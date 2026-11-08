@@ -16,7 +16,7 @@ export default function ConsentGate({
   onCancel,
 }: ConsentGateProps) {
   const downloadSize =
-    engineHint === 'wllama' ? '~30 MB WASM model' : '~800 MB model, cached forever';
+    engineHint === 'wllama' ? '~400 MB WASM fallback model' : '~800 MB model, cached forever';
   return (
     <div className="consent-gate" data-testid="consent-gate">
       <h2>Run the local model.</h2>
