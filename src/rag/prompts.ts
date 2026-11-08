@@ -11,6 +11,8 @@ export function buildRagPrompt(
     .join('\n\n');
   const user = [
     'Use ONLY the context below to answer. Cite every claim as [path#anchor].',
+    'Answer in a complete sentence: copy usernames, URLs, emails, numbers, and tool names EXACTLY as they appear in the context.',
+    'Never answer with only a citation — a citation must come after a full prose answer.',
     'If the context does not contain the answer, say so.',
     '',
     'Context:',

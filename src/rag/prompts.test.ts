@@ -26,6 +26,12 @@ describe('buildRagPrompt', () => {
     const { user } = buildRagPrompt('What RAG stack does Gaurav use?', HITS, PERSONA);
     expect(user).toContain('What RAG stack does Gaurav use?');
   });
+
+  it('instructs the model to answer in prose, never citation-only', () => {
+    const { user } = buildRagPrompt('q', HITS, PERSONA);
+    expect(user).toContain('Never answer with only a citation');
+    expect(user).toContain('copy');
+  });
 });
 
 describe('buildGeneralPrompt', () => {
