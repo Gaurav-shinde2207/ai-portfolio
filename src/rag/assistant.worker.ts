@@ -115,7 +115,7 @@ async function generateWllama(prompt: { system: string; user: string }, maxToken
       { role: 'user', content: prompt.user },
     ],
     max_tokens: maxTokens,
-    temperature: 0.6,
+    temperature: 0.2,
     stream: true,
     onData: (chunk) => {
       if (cancelled) return;
@@ -142,7 +142,7 @@ async function ask(q: string): Promise<void> {
       const prompt = buildRagPrompt(q, hits.map(vadapt), PERSONA_SYSTEM);
       const gen = mlc
         ? await generateWebGPU(prompt)
-        : await generateWllama(prompt, 160);
+        : await generateWllama(prompt, 240);
       const cited = hits
         .filter((h) => h.score >= RAG_THRESHOLD)
         .slice(0, 3)
@@ -160,7 +160,7 @@ async function ask(q: string): Promise<void> {
       const prompt = buildGeneralPrompt(q, GENERAL_SYSTEM);
       const gen = mlc
         ? await generateWebGPU(prompt)
-        : await generateWllama(prompt, 160);
+        : await generateWllama(prompt, 240);
       post({
         type: 'done',
         cited: [],
